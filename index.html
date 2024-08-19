@@ -34,8 +34,11 @@
 <body>
 	<script type="module">
 		import * as THREE from 'three';
+		
 		import * as BufferGeometryUtils from 'three/addons/utils/BufferGeometryUtils.js';
 		import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+		import { STLExporter } from 'three/addons/exporters/STLExporter.js';
+		import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
 		// or
 		//   import { OrbitControls } from 'https://unpkg.com/three@0.163.0/examples/jsm/controls/OrbitControls.js'
 		
@@ -48,24 +51,14 @@
 		scene.background = new THREE.Color( 0x444444 );
 		
 		// Create a basic perspective camera
-		var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 50);
+		var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000);
 		camera.position.z = 30;
 
 		// Create a renderer with Antialiasing
 		var renderer = new THREE.WebGLRenderer({ antialias: true });
-
 		renderer.setPixelRatio( window.devicePixelRatio );
-
-		// Configure renderer size
 		renderer.setSize(window.innerWidth, window.innerHeight);
-
-		// Append Renderer to DOM
 		document.body.appendChild(renderer.domElement);
-		
-		
-		
-		
-	
 
 		const orbit = new OrbitControls( camera, renderer.domElement );
 		orbit.enableZoom = true;
@@ -82,7 +75,14 @@
 		scene.add( lights[ 0 ] );
 		scene.add( lights[ 1 ] );
 		scene.add( lights[ 2 ] );
-	
+
+		// size means how long per line (unit)
+		// divisions means how many boxes per line
+		// therefore, both must have same value if GridHelper is intended to use as a ruler
+		const size = 10000, divisions = 10000;
+
+		const gridHelper = new THREE.GridHelper( size, divisions, 0xFFFFFF, 0x222222 );
+		scene.add(gridHelper);
 		
 		const group = new THREE.Group();
 
@@ -94,49 +94,46 @@
 
 		group.add( new THREE.LineSegments( geometry, lineMaterial ) );
 		group.add( new THREE.Mesh( geometry, meshMaterial ) );
-		
-	
-		
+
 		const data = {
-			width: 15,
-			height: 15,
-			depth: 15,
-			widthSegments: 1,
-			heightSegments: 1,
-			depthSegments: 1
+			width: 20,
+			height: 2,
+			depth: 34
 		};
+
+		const params = {
+			exportASCII: exportASCII,
+			exportBinary: exportBinary
+		};
+
 		
-		group.children[ 0 ].geometry.dispose();
-		group.children[ 1 ].geometry.dispose();
+		// group.children[ 0 ].geometry.dispose();
+		// group.children[ 1 ].geometry.dispose();
 		
-		const boxGeometry = new THREE.BoxGeometry(data.width, data.height, data.depth, data.widthSegments, data.heightSegments, data.depthSegments);
+		const boxGeometry = new THREE.BoxGeometry(data.width, data.height, data.depth);
 		
 		group.children[ 0 ].geometry = new THREE.WireframeGeometry( boxGeometry );
 		group.children[ 1 ].geometry = boxGeometry;
+
+
+		group.attach(new THREE.Mesh( new THREE.BoxGeometry( 1, 1, 1 ), meshMaterial ))
 	
 		scene.add(group);
 
 		// // Add cube to Scene
 
-
 		// Render Loop
 		var render = function () {
 			requestAnimationFrame(render);
 			
-
-			group.rotation.x += 0.005;
-			group.rotation.y += 0.005;
-
+			// group.rotation.x += 0.005;
+			// group.rotation.y += 0.005;
 
 			// Render the scene
 			renderer.render(scene, camera);
 		};
 
 		render();
-		
-		
-		
-		
 		
 
 		window.addEventListener( 'resize', function () {
@@ -145,23 +142,31 @@
 			camera.updateProjectionMatrix();
 
 			renderer.setSize( window.innerWidth, window.innerHeight );
-
 		}, false );
 
+		const gui = new GUI();
+		const pcbFolder = gui.addFolder( 'PCB' );
+		pcbFolder.add( data, 'width').onChange( generateGeometry );
+		pcbFolder.add( data, 'height').onChange( generateGeometry );
+		pcbFolder.add( data, 'depth').onChange( generateGeometry );
 
+		const exportFolder = gui.addFolder( 'Export' );
+		exportFolder.add( params, 'exportASCII' ).name( 'Export STL (ASCII)' );
+		exportFolder.add( params, 'exportBinary' ).name( 'Export STL (Binary)' );
+
+		function generateGeometry() {
+			updateGroupGeometry( group, new THREE.BoxGeometry(data.width, data.height, data.depth, data.widthSegments, data.heightSegments, data.depthSegments));
+		}
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+		function updateGroupGeometry( mesh, geometry ) {
+			mesh.children[ 0 ].geometry.dispose();
+			mesh.children[ 1 ].geometry.dispose();
+
+			mesh.children[ 0 ].geometry = new THREE.WireframeGeometry( geometry );
+			mesh.children[ 1 ].geometry = geometry;
+			// these do not update nicely together if shared
+		}
 	</script>
 </body>
-
 </html>
