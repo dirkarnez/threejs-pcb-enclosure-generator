@@ -46,6 +46,7 @@
 		// BASIC SETUP
 		// ------------------------------------------------
 
+		
 		const exporter = new STLExporter();
 
 		// Create an empty scene
@@ -138,6 +139,14 @@
 		
 		// group.children[ 0 ].geometry.dispose();
 		// group.children[ 1 ].geometry.dispose();
+
+		(async () => {
+			fetch("./")
+			.then(() => )
+			.then(t => {
+				threeCSGTypeScript
+			})
+		})()
 		
 		const boxGeometry = new THREE.BoxGeometry(data.width, data.height, data.depth);
 		
