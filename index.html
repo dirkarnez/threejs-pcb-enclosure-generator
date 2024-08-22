@@ -25,13 +25,26 @@
 		{
 			"imports": {
 				"three": "https://unpkg.com/three@0.163.0/build/three.module.js",
-				"three/addons/": "https://unpkg.com/three@0.163.0/examples/jsm/"
+				"three/addons/": "https://unpkg.com/three@0.163.0/examples/jsm/",
+				"three-csg-ts": "https://cdn.jsdelivr.net/npm/three-csg-ts@3.2.0/+esm"
 			}
 		}
 	</script>
 </head>
 
 <body>
+	<!-- <script>
+		(() => {
+			fetch("./three-csg-ts.3.2.0.min.js")
+			.then(data => data.text())
+			.then(jsCode => {
+				eval(jsCode);
+				window.threeCSGTypeScript = threeCSGTypeScript;
+				console.log(threeCSGTypeScript)
+				// threeCSGTypeScript
+			})
+		})();
+	</script> -->
 	<script type="module">
 		import * as THREE from 'three';
 		
@@ -39,6 +52,9 @@
 		import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 		import { STLExporter } from 'three/addons/exporters/STLExporter.js';
 		import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
+		import { CSG } from "three-csg-ts";
+
+		debugger;
 		// or
 		//   import { OrbitControls } from 'https://unpkg.com/three@0.163.0/examples/jsm/controls/OrbitControls.js'
 		
@@ -140,14 +156,8 @@
 		// group.children[ 0 ].geometry.dispose();
 		// group.children[ 1 ].geometry.dispose();
 
-		(async () => {
-			fetch("./")
-			.then(() => )
-			.then(t => {
-				threeCSGTypeScript
-			})
-		})()
-		
+
+
 		const boxGeometry = new THREE.BoxGeometry(data.width, data.height, data.depth);
 		
 		group.children[ 0 ].geometry = new THREE.WireframeGeometry( boxGeometry );
@@ -157,6 +167,22 @@
 		group.attach(new THREE.Mesh( new THREE.BoxGeometry( 1, 1, 1 ), meshMaterial ))
 	
 		scene.add(group);
+
+
+
+
+		const box = new THREE.Mesh(
+			new THREE.BoxGeometry(2, 2, 2),
+			new THREE.MeshNormalMaterial()
+		);
+		const sphere = new THREE.Mesh(new THREE.SphereGeometry(1.2, 8, 8));
+
+		// Make sure the .matrix of each mesh is current
+		box.updateMatrix();
+		sphere.updateMatrix();
+		
+		scene.add(CSG.subtract(box, sphere));
+
 
 		// // Add cube to Scene
 
