@@ -70,8 +70,8 @@
 		scene.background = new THREE.Color( 0x444444 );
 		
 		// Create a basic perspective camera
-		var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000);
-		camera.position.z = 30;
+		const camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 100 );
+		camera.position.set( 5, 2, 8 );
 
 		// Create a renderer with Antialiasing
 		var renderer = new THREE.WebGLRenderer({ antialias: true });
