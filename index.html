@@ -294,9 +294,9 @@
 
 		const gui = new GUI({title: "X axis is red. Y axis is green. Z axis is blue."});
 		const pcbFolder = gui.addFolder( 'PCB' );
-		pcbFolder.add( data, 'width').onChange( generateGeometry )//.name( 'width (X axis)' );
-		pcbFolder.add( data, 'height').onChange( generateGeometry )//.name( 'height (Y axis)' );
-		pcbFolder.add( data, 'depth').onChange( generateGeometry )//.name( 'depth (Z axis)' );
+		pcbFolder.add( data, 'width').name( 'width (X axis)' ).onChange( generateGeometry );
+		pcbFolder.add( data, 'height').name( 'height (Y axis)' ).onChange( generateGeometry );
+		pcbFolder.add( data, 'depth').name( 'depth (Z axis)' ).onChange( generateGeometry );
 
 		const exportFolder = gui.addFolder( 'Export' );
 		exportFolder.add( params, 'exportASCII' ).name( 'Export STL (ASCII)' );
