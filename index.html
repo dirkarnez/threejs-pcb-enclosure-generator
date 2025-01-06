@@ -59,8 +59,6 @@
 		// ------------------------------------------------
 		// BASIC SETUP
 		// ------------------------------------------------
-
-		
 		const exporter = new STLExporter();
 
 		// Create an empty scene
@@ -76,6 +74,10 @@
 		renderer.setPixelRatio( window.devicePixelRatio );
 		renderer.setSize(window.innerWidth, window.innerHeight);
 		document.body.appendChild(renderer.domElement);
+
+		
+
+		let objs = [];
 
 		const orbit = new OrbitControls( camera, renderer.domElement );
 		orbit.enableZoom = true;
@@ -113,7 +115,7 @@
 		const lineMaterial = new THREE.LineBasicMaterial( { color: 0xffffff, transparent: true, opacity: 0.5 } );
 		const meshMaterial = new THREE.MeshPhongMaterial( { color: 0x156289, emissive: 0x072534, side: THREE.DoubleSide, flatShading: true } );
 
-		group.add( new THREE.LineSegments( geometry, lineMaterial ) );
+		// group.add( new THREE.LineSegments( geometry, lineMaterial ) );
 		group.add( new THREE.Mesh( geometry, meshMaterial ) );
 
 		const data = {
@@ -158,12 +160,12 @@
 		// group.children[ 0 ].geometry.dispose();
 		// group.children[ 1 ].geometry.dispose();
 
-
-
 		const boxGeometry = new THREE.BoxGeometry(data.width, data.height, data.depth);
 		
-		group.children[ 0 ].geometry = new THREE.WireframeGeometry( boxGeometry );
-		group.children[ 1 ].geometry = boxGeometry;
+		// group.children[ 0 ].geometry = new THREE.WireframeGeometry( boxGeometry );
+		group.children[ 0 ].geometry = boxGeometry;
+
+		objs.push(group.children[ 0 ]);
 
 
 		// group.attach(new THREE.Mesh( new THREE.BoxGeometry( 1, 1, 1 ), meshMaterial ))
@@ -211,6 +213,63 @@
 		));
 
 
+		var marker = new THREE.Mesh(new THREE.SphereGeometry(0.25, 4, 2), new THREE.MeshBasicMaterial({
+			color: 0xFFc8FF
+		}));
+		
+		marker.position.setScalar(1000);
+		scene.add(marker);
+
+		var intscs = [];
+		var rc = new THREE.Raycaster();
+		var m = new THREE.Vector2();
+		var poi = new THREE.Vector3();
+		var pos = new THREE.Vector3();
+		var tp = [
+			new THREE.Vector3(),
+			new THREE.Vector3(),
+			new THREE.Vector3()
+		];
+		var tri = new THREE.Triangle();
+		var bc = new THREE.Vector3();
+		var idx = 0;
+
+		renderer.domElement.addEventListener("pointermove", onMouseMove);
+
+		function onMouseMove(event) {
+			m.x = (event.clientX / window.innerWidth) * 2 - 1;
+			m.y = -(event.clientY / window.innerHeight) * 2 + 1;
+			rc.setFromCamera(m, camera);
+			intscs = rc.intersectObjects(objs, false);
+			if (intscs.length > 0) {
+				let o = intscs[0];
+				poi.copy(o.point);
+				o.object.worldToLocal(poi);
+				setPos(o.faceIndex);
+				o.object.localToWorld(pos);
+				marker.position.copy(pos);
+				console.log(`pos ${JSON.stringify(pos)}`)
+			}
+		}
+
+		function setPos(faceIndex) {
+			// geometry.setAttribute( 'position', new THREE.Float32BufferAttribute( [], 3 ) );
+
+			tp[0].fromBufferAttribute(intscs[0].object.geometry.attributes.position, faceIndex * 3 + 0);
+			tp[1].fromBufferAttribute(intscs[0].object.geometry.attributes.position, faceIndex * 3 + 1);
+			tp[2].fromBufferAttribute(intscs[0].object.geometry.attributes.position, faceIndex * 3 + 2);
+			tri.set(tp[0], tp[1], tp[2]);
+			tri.getBarycoord(poi, bc);
+			if (bc.x > bc.y && bc.x > bc.z) {
+				idx = 0;
+			} else if (bc.y > bc.x && bc.y > bc.z) {
+				idx = 1;
+			} else if (bc.z > bc.x && bc.z > bc.y) {
+				idx = 2;
+			}
+			pos.copy(tp[idx]);
+		}
+
 		// // Add cube to Scene
 
 		// Render Loop
@@ -235,9 +294,9 @@
 
 		const gui = new GUI({title: "X axis is red. Y axis is green. Z axis is blue."});
 		const pcbFolder = gui.addFolder( 'PCB' );
-		pcbFolder.add( data, 'width').name( 'width (X axis)' ).onChange( generateGeometry );
-		pcbFolder.add( data, 'height').name( 'height (Y axis)' ).onChange( generateGeometry );
-		pcbFolder.add( data, 'depth').name( 'depth (Z axis)' ).onChange( generateGeometry );
+		pcbFolder.add( data, 'width').onChange( generateGeometry )//.name( 'width (X axis)' );
+		pcbFolder.add( data, 'height').onChange( generateGeometry )//.name( 'height (Y axis)' );
+		pcbFolder.add( data, 'depth').onChange( generateGeometry )//.name( 'depth (Z axis)' );
 
 		const exportFolder = gui.addFolder( 'Export' );
 		exportFolder.add( params, 'exportASCII' ).name( 'Export STL (ASCII)' );
@@ -250,10 +309,10 @@
 		
 		function updateGroupGeometry( mesh, geometry ) {
 			mesh.children[ 0 ].geometry.dispose();
-			mesh.children[ 1 ].geometry.dispose();
+			//mesh.children[ 1 ].geometry.dispose();
 
-			mesh.children[ 0 ].geometry = new THREE.WireframeGeometry( geometry );
-			mesh.children[ 1 ].geometry = geometry;
+			mesh.children[ 0 ].geometry = geometry // new THREE.WireframeGeometry( geometry );
+			// mesh.children[ 1 ].geometry = ;
 			// these do not update nicely together if shared
 		}
 	</script>
