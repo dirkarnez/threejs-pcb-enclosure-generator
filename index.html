@@ -53,8 +53,6 @@
 		import { STLExporter } from 'three/addons/exporters/STLExporter.js';
 		import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
 		import { CSG } from "three-csg-ts";
-
-		debugger;
 		// or
 		//   import { OrbitControls } from 'https://unpkg.com/three@0.163.0/examples/jsm/controls/OrbitControls.js'
 		
@@ -70,7 +68,7 @@
 		scene.background = new THREE.Color( 0x444444 );
 		
 		// Create a basic perspective camera
-		const camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 100 );
+		const camera = new THREE.PerspectiveCamera( 100, window.innerWidth / window.innerHeight, 1, 10000 );
 		camera.position.set( 5, 2, 8 );
 
 		// Create a renderer with Antialiasing
@@ -90,6 +88,10 @@
 		lights[ 0 ].position.set( 0, 200, 0 );
 		lights[ 1 ].position.set( 100, 200, 100 );
 		lights[ 2 ].position.set( - 100, - 200, - 100 );
+
+		// The X axis is red. The Y axis is green. The Z axis is blue.
+		const axesHelper = new THREE.AxesHelper( 1000 );
+		scene.add( axesHelper );
 
 		scene.add( lights[ 0 ] );
 		scene.add( lights[ 1 ] );
@@ -226,18 +228,16 @@
 		
 
 		window.addEventListener( 'resize', function () {
-
 			camera.aspect = window.innerWidth / window.innerHeight;
 			camera.updateProjectionMatrix();
-
 			renderer.setSize( window.innerWidth, window.innerHeight );
 		}, false );
 
-		const gui = new GUI();
+		const gui = new GUI({title: "X axis is red. Y axis is green. Z axis is blue."});
 		const pcbFolder = gui.addFolder( 'PCB' );
-		pcbFolder.add( data, 'width').onChange( generateGeometry );
-		pcbFolder.add( data, 'height').onChange( generateGeometry );
-		pcbFolder.add( data, 'depth').onChange( generateGeometry );
+		pcbFolder.add( data, 'width').name( 'width (X axis)' ).onChange( generateGeometry );
+		pcbFolder.add( data, 'height').name( 'height (Y axis)' ).onChange( generateGeometry );
+		pcbFolder.add( data, 'depth').name( 'depth (Z axis)' ).onChange( generateGeometry );
 
 		const exportFolder = gui.addFolder( 'Export' );
 		exportFolder.add( params, 'exportASCII' ).name( 'Export STL (ASCII)' );
