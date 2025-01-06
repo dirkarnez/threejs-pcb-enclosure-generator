@@ -1,6 +1,5 @@
 [threejs-pcb-enclosure-generator](https://dirkarnez.github.io/threejs-pcb-enclosure-generator)
 ==============================================================================================
-- !!!!!!!!!!!!!!!!!!https://jsfiddle.net/pbohqtyw/
 - **https://threejs.org/examples/#misc_controls_drag**
 - **https://threejs.org/examples/misc_controls_transform.html**
 - https://github.com/mrdoob/three.js/blob/master/examples/misc_exporter_stl.html
@@ -14,3 +13,8 @@
 ### Meshes
 - https://www.thingiverse.com/thing:4725072
 - https://www.thingiverse.com/thing:994827
+
+
+### Reference
+- [./reference/position.html](./reference/position.html)
+    - From https://jsfiddle.net/pbohqtyw/
