@@ -17,6 +17,9 @@
 - https://www.thingiverse.com/thing:4725072
 - https://www.thingiverse.com/thing:994827
 
+### Tools
+- [**prusa3d/PrusaSlicer: G-code generator for 3D printers (RepRap, Makerbot, Ultimaker etc.)**](https://github.com/prusa3d/prusaslicer)
+    - measure STL mesh length
 
 ### Reference
 - [./reference/position.html](./reference/position.html)
