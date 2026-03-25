@@ -23,6 +23,8 @@
 - [**dirkarnez/openscad-nuts-and-bolts-github-action**](https://github.com/dirkarnez/openscad-nuts-and-bolts-github-action)
     - print nuts and bolts if needed
     - for enclosure, there is not need to add nuts / bolts. Just make some cylinders for nuts and bolts to work themselves
+- [dirkarnez/ifc-openscad-polygon-editor](https://github.com/dirkarnez/ifc-openscad-polygon-editor)
+    - [OpenSCAD polygon builder](https://dirkarnez.github.io/ifc-openscad-polygon-editor/)
   
 ### Reference
 - [./reference/position.html](./reference/position.html)
