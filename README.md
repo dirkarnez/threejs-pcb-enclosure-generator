@@ -20,7 +20,10 @@
 ### Tools
 - [**prusa3d/PrusaSlicer: G-code generator for 3D printers (RepRap, Makerbot, Ultimaker etc.)**](https://github.com/prusa3d/prusaslicer)
     - measure STL mesh length
-
+- [**dirkarnez/openscad-nuts-and-bolts-github-action**](https://github.com/dirkarnez/openscad-nuts-and-bolts-github-action)
+    - print nuts and bolts if needed
+    - for enclosure, there is not need to add nuts / bolts. Just make some cylinders for nuts and bolts to work themselves
+  
 ### Reference
 - [./reference/position.html](./reference/position.html)
     - From https://jsfiddle.net/pbohqtyw/
