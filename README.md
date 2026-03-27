@@ -12,6 +12,7 @@
 
 ### Tutorials
 - [Transformations and Coordinate Systems | Discover three.js](https://discoverthreejs.com/book/first-steps/transformations/)
+- [TurboCase - Generate 3D printable cases for KiCad PCBs](https://turbocase.org/#contributing)
 
 ```
 const geometry = new THREE.RingGeometry( 1, 5, 32 );
