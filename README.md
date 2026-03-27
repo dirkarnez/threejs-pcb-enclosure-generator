@@ -13,6 +13,13 @@
 ### Tutorials
 - [Transformations and Coordinate Systems | Discover three.js](https://discoverthreejs.com/book/first-steps/transformations/)
 
+```
+const geometry = new THREE.RingGeometry( 1, 5, 32 );
+const material = new THREE.MeshBasicMaterial( { color: 0xffff00, side: THREE.DoubleSide } );
+const mesh = new THREE.Mesh( geometry, material );
+scene.add( mesh );
+[CylinderGeometry – three.js docs](https://threejs.org/docs/#CylinderGeometry)
+```
 ### Meshes
 - https://www.thingiverse.com/thing:4725072
 - https://www.thingiverse.com/thing:994827
