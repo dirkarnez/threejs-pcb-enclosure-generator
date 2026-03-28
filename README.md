@@ -13,6 +13,9 @@
 ### Tutorials
 - [Transformations and Coordinate Systems | Discover three.js](https://discoverthreejs.com/book/first-steps/transformations/)
 - [TurboCase - Generate 3D printable cases for KiCad PCBs](https://turbocase.org/#contributing)
+- Hinges (In-place printing)
+    - [Strong hinge Print-in-place by Thorin Oakenshield | Download free STL model | Printables.com](https://www.printables.com/model/1470000-strong-hinge-print-in-place)
+    - 
 
 ```
 const geometry = new THREE.RingGeometry( 1, 5, 32 );
