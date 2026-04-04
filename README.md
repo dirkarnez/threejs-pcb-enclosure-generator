@@ -10,6 +10,10 @@
 - https://grabcad.com/library/breadboard-7-3-cm-1
 - https://grabcad.com/library/double-sided-fr-4-perfboards-w-m2-corners-1
 
+### Standoffs
+- [rcolyer/threads-scad: OpenSCAD threading library](https://github.com/rcolyer/threads-scad)
+    - [threads-scad/threads.scad at master · rcolyer/threads-scad](https://github.com/rcolyer/threads-scad/blob/master/threads.scad)
+        - [`standoffs.scad`](./standoffs.scad)
 ### Tutorials
 - [Transformations and Coordinate Systems | Discover three.js](https://discoverthreejs.com/book/first-steps/transformations/)
 - [TurboCase - Generate 3D printable cases for KiCad PCBs](https://turbocase.org/#contributing)
