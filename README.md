@@ -10,6 +10,14 @@
 - https://grabcad.com/library/breadboard-7-3-cm-1
 - https://grabcad.com/library/double-sided-fr-4-perfboards-w-m2-corners-1
 
+### Notes
+- Use OpenSCAD instead
+    - [threading.scad · BelfrySCAD/BOSL2 Wiki](https://github.com/BelfrySCAD/BOSL2/wiki/threading.scad#module-threaded_rod)
+        - ```openscad
+            include <BOSL2/std.scad>
+            include <BOSL2/threading.scad>
+            threaded_nut(shape="square", nutwidth=16, id=8, h=8, pitch=1.25, $slop=0.1, $fa=1, $fs=1);
+          ```
 ### Standoffs
 - [rcolyer/threads-scad: OpenSCAD threading library](https://github.com/rcolyer/threads-scad)
     - [threads-scad/threads.scad at master · rcolyer/threads-scad](https://github.com/rcolyer/threads-scad/blob/master/threads.scad)
