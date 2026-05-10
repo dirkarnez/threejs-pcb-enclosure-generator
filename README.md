@@ -23,6 +23,7 @@
     - [threads-scad/threads.scad at master · rcolyer/threads-scad](https://github.com/rcolyer/threads-scad/blob/master/threads.scad)
         - [`standoffs.scad`](./standoffs.scad)
 ### Tutorials
+- [ubitux/shimonbox: Semi-automatically generated 3D printable cases for development boards using OpenSCAD](https://github.com/ubitux/shimonbox/)
 - [Transformations and Coordinate Systems | Discover three.js](https://discoverthreejs.com/book/first-steps/transformations/)
 - [TurboCase - Generate 3D printable cases for KiCad PCBs](https://turbocase.org/#contributing)
 - Hinges (In-place printing)
